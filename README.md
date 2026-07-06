@@ -20,8 +20,9 @@ This repository contains the complete solution for the DevOps Assessment, featur
 docker compose up -d
 docker exec -i local_postgres psql -U devops_user -d booking_db < database/init.sql
 
+```bash
 
-## Architecture & Design Decisions
+### Architecture & Design Decisions
 
 ### 1. Traffic Flow & Security Boundary
 The AWS infrastructure strictly enforces the requested privacy constraints:
