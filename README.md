@@ -20,7 +20,7 @@ This repository contains the complete solution for the DevOps Assessment, featur
 docker compose up -d
 docker exec -i local_postgres psql -U devops_user -d booking_db < database/init.sql
 
-```bash
+```
 
 ### Architecture & Design Decisions
 
