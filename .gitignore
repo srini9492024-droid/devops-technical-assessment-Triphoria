@@ -1,0 +1,9 @@
+# Ignore hidden Terraform execution and provider directories
+**/.terraform/
+
+# Ignore local state files
+*.tfstate
+*.tfstate.*
+
+# Ignore specific local binary workarounds
+**/terraform.exe

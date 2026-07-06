@@ -1,0 +1,57 @@
+name: "DevOps Assessment: Terraform CI/CD"
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  terraform-ci:
+    name: "Terraform Lint, Validate, and Plan"
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the source code from GitHub
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Setup the official Terraform CLI environment
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.1
+
+      # 3. Verify code formatting complies with standards
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      # 4. Initialize and Validate the Dev Environment
+      - name: Initialize & Validate Dev
+        run: |
+          cd infra/envs/dev
+          terraform init -backend=false
+          terraform validate
+
+      # 5. Initialize and Validate the Prod Environment
+      - name: Initialize & Validate Prod
+        run: |
+          cd infra/envs/prod
+          terraform init -backend=false
+          terraform validate
+
+      # 6. Static Security Analysis (Trivy Vulnerability Scanner)
+      - name: Run Trivy Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          hide-progress: true
+          format: 'table'
+          exit-code: '0' # Keeps pipeline green for testing, logs issues clearly
+          ignore-unfixed: true
