@@ -15,12 +15,39 @@ This repository contains the complete solution for the DevOps Assessment, featur
 * Docker & Docker Compose
 * Git Bash (for Windows environments)
 
-### Initialize the Container Data Layer
+### 1. Initialize the Container Data Layer
 ```bash
 docker compose up -d
 docker exec -i local_postgres psql -U devops_user -d booking_db < database/init.sql
 
 ```
+### 2. Execute a Secure Binary Backup
+```
+./scripts/backup.sh
+```
+### 3. Execute an Isolated Point-in-Time Restoration
+```
+./scripts/restore.sh ./backups/backup_YOUR_TIMESTAMP.dump
+
+```
+### Cloud Infrastructure Deployment (Terraform)
+To validate the infrastructure blocks and view the speculative execution plans locally:
+```
+cd infra/envs/dev
+terraform init
+terraform validate
+terraform plan
+```
+
+### Continuous Integration (CI/CD)
+This repository utilizes a GitHub Actions workflow that automatically triggers on pushes and Pull Requests to the ```master``` branch. The pipeline executes:
+
+```terraform fmt -check```
+
+```terraform validate```
+
+```terraform plan``` (Outputs visible directly in the GitHub Actions workflow logs)
+
 
 ### Architecture & Design Decisions
 
