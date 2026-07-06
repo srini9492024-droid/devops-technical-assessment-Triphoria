@@ -15,7 +15,7 @@ This repository contains the complete solution for the DevOps Assessment, featur
 * Docker & Docker Compose
 * Git Bash (for Windows environments)
 
-### 1. Initialize the Container Data Layer
+### Initialize the Container Data Layer
 ```bash
 docker compose up -d
 docker exec -i local_postgres psql -U devops_user -d booking_db < database/init.sql
